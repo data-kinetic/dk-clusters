@@ -19,14 +19,9 @@ Last updated: 2026-03-23
 
 | VMID | Name | vCPU | RAM | Disk | Storage | HA | Role |
 |------|------|------|-----|------|---------|-----|------|
-| 201 | k3s-slave-1 | ? | ? | ? | ? | No | K3s worker |
-| 211 | venom | ? | ? | ? | ? | No | Edge LB (Traefik + Keepalived) |
-| 220 | vllm-minimax | ? | ? | ? | ? | No (GPU passthrough) | vLLM inference |
-
-> **Note:** krang VM specs (201, 211, 220) need to be populated. Run:
-> ```bash
-> ssh krang 'for vm in 201 211 220; do echo "=== VM $vm ===" && sudo qm config $vm 2>/dev/null | grep -E "name|cores|memory|scsi|net|boot"; done'
-> ```
+| 201 | k3s-slave-1 | 12 | 64G | 250G | local-lvm | No | K3s worker (vmbr1 + vmbr2) |
+| 211 | venom | 2 | 2G | 10G | local-lvm | No | Edge LB — Traefik + Keepalived (vmbr1 + vmbr2 + vmbr3) |
+| 220 | vllm-minimax | 64 | 256G | 500G + 2TB models | local-lvm + models zvol | No | vLLM inference — 8× A100 GPU passthrough (vmbr0) |
 
 ## Recommendations
 
@@ -78,4 +73,5 @@ Current names are generally clear. The plan recommends a `dk-<role>-<host>` form
 | Host | Total vCPU Allocated | Total RAM Allocated | VM Count |
 |------|---------------------|--------------------|----|
 | penguin | 108 | 420G | 6 (incl. template) |
-| krang | ? | ? | 3 |
+| krang | 78 | 322G | 3 |
+| **Total** | **186** | **742G** | **9** |
