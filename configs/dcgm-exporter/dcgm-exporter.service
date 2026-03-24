@@ -1,0 +1,16 @@
+[Unit]
+Description=NVIDIA DCGM Exporter
+Documentation=https://github.com/NVIDIA/dcgm-exporter
+After=network-online.target nvidia-dcgm.service
+Wants=network-online.target
+Requires=nvidia-dcgm.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/dcgm-exporter --address :9400
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
