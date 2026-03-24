@@ -39,7 +39,11 @@ ssh vm100-litellm                        # LiteLLM VM
 ssh vm101-preview-stack                  # Preview stack VM
 ssh -J penguin ubuntu@10.0.0.2           # phantom edge LB
 ssh -J krang ubuntu@10.0.0.3             # venom edge LB
+ssh root@192.168.10.101                  # vllm-minimax VM (GPU inference)
 ```
+
+**krang SSH access:** The `krang` SSH alias connects as a non-root user without sudo.
+For privileged operations (installing packages, systemd), use `ssh root@192.168.10.100` directly.
 
 ## Repository Structure
 
