@@ -13,6 +13,9 @@ fi
 echo "--- Creating /opt/pve-exporter ---"
 mkdir -p /opt/pve-exporter
 
+echo "--- Ensuring python3-venv is installed ---"
+apt-get install -y python3-venv
+
 echo "--- Creating Python virtual environment ---"
 python3 -m venv /opt/pve-exporter/venv
 

@@ -21,7 +21,11 @@ Last updated: 2026-03-23
 |------|------|------|-----|------|---------|-----|------|
 | 201 | k3s-slave-1 | 12 | 64G | 250G | local-lvm | No | K3s worker (vmbr1 + vmbr2) |
 | 211 | venom | 2 | 2G | 10G | local-lvm | No | Edge LB — Traefik + Keepalived (vmbr1 + vmbr2 + vmbr3) |
-| 220 | vllm-minimax | 64 | 256G | 500G + 2TB models | local-lvm + models zvol | No | vLLM inference — 8× A100 GPU passthrough (vmbr0) |
+| 220 | vllm-minimax | 64 | 256G | 500G + 2TB models | local-lvm + models zvol | No | vLLM inference — 8× A100 GPU passthrough (vmbr0) — DCGM exporter on :9400 |
+
+> **Note:** VM 220 (vllm-minimax) at 192.168.10.101 has all 8 A100 GPUs PCI-passthrough from the krang host.
+> The DCGM exporter runs as a Docker container inside this VM (`nvcr.io/nvidia/k8s/dcgm-exporter`),
+> exposing GPU metrics on port 9400 for Prometheus scraping. See `scripts/install-dcgm-exporter.sh`.
 
 ## Recommendations
 
