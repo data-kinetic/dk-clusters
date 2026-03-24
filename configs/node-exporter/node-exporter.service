@@ -1,0 +1,26 @@
+[Unit]
+Description=Prometheus Node Exporter
+Documentation=https://github.com/prometheus/node_exporter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=node_exporter
+ExecStart=/usr/local/bin/node_exporter \
+  --collector.cpu \
+  --collector.diskstats \
+  --collector.filesystem \
+  --collector.meminfo \
+  --collector.netdev \
+  --collector.zfs \
+  --collector.loadavg \
+  --collector.uname \
+  --collector.hwmon \
+  --collector.nvme \
+  --web.listen-address=:9100
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

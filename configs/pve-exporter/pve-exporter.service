@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus PVE Exporter
+Documentation=https://github.com/prometheus-pve/prometheus-pve-exporter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/pve-exporter
+ExecStart=/opt/pve-exporter/venv/bin/pve_exporter /opt/pve-exporter/pve.yml --port 9221
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
