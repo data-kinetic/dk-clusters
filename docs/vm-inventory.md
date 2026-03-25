@@ -9,7 +9,7 @@ Last updated: 2026-03-23
 | VMID | Name | vCPU | RAM | Disk | Storage | HA | Role |
 |------|------|------|-----|------|---------|-----|------|
 | 100 | litellm-server | 16 | 64G | 500G | bulk-images | Yes | LLM proxy |
-| 101 | preview-stack | 32 | 128G | 500G | bulk-images | No | Preview envs |
+| 101 | preview-stack | 32 | 64G (balloon 32G) | 500G | bulk-images | No | Preview envs |
 | 102 | dk-shared-services | 24 | 96G | 500G | bulk-images | No | Shared services |
 | 200 | k3s-master-1 | 32 | 128G | 1T | nvfast | No | K3s control plane |
 | 210 | phantom | 2 | 2G | 10G | local-lvm | No | Edge LB (Traefik + Keepalived) |
@@ -40,7 +40,7 @@ ha-manager add vm:200 --state started --group proxmox-ha
 
 ### 2. preview-stack (VM 101) is overprovisioned
 
-32 vCPU and 128G RAM for a docker-compose preview environment is excessive. Unless running many concurrent preview stacks, this could be halved (16 vCPU / 64G) to free resources for other workloads.
+32 vCPU and 64G RAM (balloon min 32G) for a docker-compose preview environment. Right-sized from 128G on 2026-03-24. Monitor actual usage to determine if further reduction is feasible.
 
 **Action:** Monitor actual usage via `htop` or Proxmox metrics, then right-size.
 
